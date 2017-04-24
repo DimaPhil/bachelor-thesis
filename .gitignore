@@ -1,0 +1,12 @@
+*/*.aux
+*/*.bcf
+*/*.log
+*/*.pdf
+*/*.run.xml
+*/*.gz
+*/*.tct
+*/*.toc
+*/*.dvi
+*/*.bbl
+*/*.blg
+*/build
