@@ -1,0 +1,21 @@
+ graph ethane {
+   A[label="R. Agrawal",color="red"]
+   B[label="H.V.Jagadish"]
+   C[label="C. Faloutsos"]
+   D[label="H. Mannila"]
+   H[label="D. Pregibon"]
+   I[label="P. Smyth"]
+   J[label="J. Han",color="red"]
+   A -- B
+   A -- C
+   A -- D
+   B -- C
+   C -- I
+   C -- H
+   D -- H
+   D -- I
+   D -- J
+   H -- J
+   I -- H
+ }
+        

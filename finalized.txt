@@ -1,0 +1,70 @@
+Don't forget about "An attribute-based community search method with graph refining"
+(https://link.springer.com/article/10.1007/s11227-017-1976-z)
+
+Current:
+
+1. The Minimum Wiener Connector Problem. 
+   June 04, 2015.
+
+https://pdfs.semanticscholar.org/449b/14b07df6264d75dad8698baca09016555777.pdf
+
+2. SISP:A New Framework for Searching the Informative Subgraph Based on PSO.
+   October 24, 2011
+
+http://dl.acm.org.sci-hub.cc/citation.cfm?id=2063645
+
+3. Efficient processing of group-oriented connection queries in a large graph
+   November 04, 2009
+
+https://pdfs.semanticscholar.org/30f7/ee47ac96fb00be29a243b39211cc71003eff.pdf
+
+4. Efficient and effective community search
+   June 07, 2015
+
+http://link.springer.com.secure.sci-hub.cc/article/10.1007/s10618-015-0422-1
+
+
+5. Context-Aware Object Connection Discovery in Large Graphs
+   April 10, 2009
+
+http://www.cs.ust.hk/faculty/wilfred/paper/icde09.pdf
+
+6. The community-search problem and how to plan a successful cocktail party
+   July 28, 2010
+
+https://users.ics.aalto.fi/gionis/cocktail.pdf
+
+7. Approximate Closest Community Search in Networks
+   December, 2015
+
+http://www.vldb.org/pvldb/vol9/p276-huang.pdf
+
+8. Finding a Friendly Community in Social Networks Considering Bad Relationships
+   September 26, 2014
+
+http://sci-hub.cc/10.1093/comjnl/bxu092
+
+9. Robust local community detection: on free rider effect and its elimination (cited by baseline)
+   February, 2015
+
+http://dl.acm.org.sci-hub.cc/citation.cfm?id=2752948
+
+10. Local community detection by seed expansion: from conductance to weighted kernel 1-mean optimization
+    January 21, 2016
+
+http://ai2-s2-pdfs.s3.amazonaws.com/8b5a/d3298745a67fb000e006eb6ac53bc2625cc7.pdf
+
+
+1. Baseline (7). Ищут максимальный k-truss с минимальным диаметром
+  * NP-hard, нужны оптимизации
+2. Ищут подграф с максимальной минимальной степенью вершины
+  В (6):
+    * Можно решать за O(n), но подграф-ответ будет большим, нужны ограничения 
+    * Добавляем бюджет, становится NP-hard
+  В (4):
+    * Не добавляют бюджет, просто стараются минимизировать эвристиками размер ответа
+    * Без параметров
+    * Быстро
+    * Большой граф, несколько вершин в запросе
+
+http://i.cs.hku.hk/~jhu/pub/cikm16.pdf

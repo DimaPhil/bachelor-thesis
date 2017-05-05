@@ -1,0 +1,72 @@
+\documentclass[11pt,a4paper,oneside]{article}
+
+\usepackage[english,russian]{babel}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{olymp}
+\usepackage{graphicx}
+\usepackage{expdlist}
+\usepackage{mfpic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{comment}
+\usepackage{listings}
+\usepackage{epigraph}
+\usepackage{url}
+\usepackage{ulem}
+\usepackage{MnSymbol,wasysym}
+
+\DeclareMathOperator{\nott}{not}
+
+\begin{document}
+
+\renewcommand{\t}[1]{\mbox{\texttt{#1}}}
+\newcommand{\s}[1]{\mbox{``\t{#1}''}}
+\newcommand{\eps}{\varepsilon}
+\renewcommand{\phi}{\varphi}
+\newcommand{\plainhat}{{\char 94}}
+
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\w}[1]{``\t{#1}''}
+
+
+\binoppenalty=10000
+\relpenalty=10000
+
+\createsection{\Note}{Комментарий}
+
+\contest{Отчет по бакаларской работе}{ИТМО}{01 апреля 2017 года}
+
+\textbf{A. Текущие результаты}
+
+\begin{itemize}
+\item Реализован выбранный бейзлайн на основе k-core. Сейчас находится на стадии тестирования (не хватает оперативки для полноценного тестирования, решаю этот вопрос).
+\end{itemize}
+
+\textbf{B. Планы на апрель}
+
+\begin{itemize}
+  \item \textbf{3-9 апреля}: 
+    \begin{itemize} 
+      \item протестировать бейзлайн на сервере, убедиться, что он работает
+      \item обдумать и обсудить с научным руководителем, что и как делать с научной новизной (ее варианты ниже)
+      \item Подумать, как распространить бейзлайн на ориентированные графы
+      \item Попробовать применить другие псевдоклики к текущему алгоритму
+      \item Поиграться с весовыми функциями в алгоритме, попробовать уменьшить размер подграфа, выделяемого по запросу
+    \end{itemize}
+  \item \textbf{10-16, 17-23 апреля}:
+    \begin{itemize}
+      \item Написание пояснительной записки
+      \item Реализация выбранных методов научной новизны, их улучшение при необходимости
+    \end{itemize}
+  \item \textbf{24-30 апреля}:
+    \begin{itemize}
+      \item Написание самого текста диплома, мелкие правки, если нужно
+    \end{itemize}
+\end{itemize}
+
+\textbf{С. Статьи, публикации}
+
+\frownie{}
+
+\end{document}

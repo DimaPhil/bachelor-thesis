@@ -1,0 +1,27 @@
+1. https://www.researchgate.net/profile/Gypsy_Nandi/publication/261988079_ONLINE_SOCIAL_NETWORK_MINING_CURRENT_TRENDS_AND_RESEARCH_ISSUES/links/00b495361c9ba47876000000.pdf
+2. https://pdfs.semanticscholar.org/63c6/5c6ae55439552060e084f3d999bab508745c.pdf
+3. http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.214.1053&rep=rep1&type=pdf
+4. http://www.cs.cmu.edu/~htong/work/thesis/proposal-tong.pdf
+5. http://resources.mpi-inf.mpg.de/yago-naga/naga/download/kasneci-cikm2009.pdf
+6. https://users.ics.aalto.fi/gionis/cocktail.pdf
+7. https://www.cs.bgu.ac.il/~snean142/wiki.files/7-8-Viewpoint-based-Approach-for-Interactoin-Graph-Analysis.pdf
+8. http://www.vldb.org/pvldb/vol9/p276-huang.pdf - December 2015
+9. http://www.vldb.org/pvldb/vol8/p798-wu.pdf - February 2015
+10. http://www.vldb.org/pvldb/vol8/p509-li.pdf - January 2015
+11. http://www.epasto.org/papers/densest-subgraph.pdf - May 2015
+12. http://people.seas.harvard.edu/~babis/dsd.pdf - August 2015
+13. http://link.springer.com/article/10.1007/s10618-015-0422-1
+
+
+New ones:
+
+(possibly new baseline) 1. https://link.springer.com/article/10.1007/s11227-017-1976-z
+2. https://pdfs.semanticscholar.org/fb64/c2b891b30ed86a37f982a71c67cac02b2f46.pdf
+(current baseline) 3. http://www.vldb.org/pvldb/vol9/p276-huang.pdf 
+4. http://www.cs.hku.hk/research/techreps/document/TR-2016-01.pdf
+5. https://arxiv.org/pdf/1610.02455.pdf
+6. https://users.ics.aalto.fi/gionis/bump_hunting.pdf
+7. http://www.heinz.cmu.edu/EconFacultySearch2014/Akoglu_Leman/JMP_Akoglu.pdf
+8. http://staff.ustc.edu.cn/~cheneh/paper_pdf/2006/04031895.pdf
+9. https://pdfs.semanticscholar.org/fb64/c2b891b30ed86a37f982a71c67cac02b2f46.pdf
+10. http://tonghanghang.org/pdfs/kdd07_dap.pdf - For directed graphs
