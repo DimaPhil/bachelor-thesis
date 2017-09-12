@@ -1,4 +1,4 @@
-\documentclass[specification,annotation]{itmo-student-thesis}
+\documentclass[specification,annotation,times]{itmo-student-thesis}
 
 %% Опции пакета:
 %% - specification - если есть, генерируется задание, иначе не генерируется
@@ -9,6 +9,7 @@
 %% $1,5x$ будет читаться как полтора икса, а не один запятая пять иксов. 
 %% Однако если написать $1, 5x$, то все будет как прежде.
 \usepackage{icomma}
+\usepackage{placeins}
 
 %% Указываем файл с библиографией.
 \addbibresource{bachelor-thesis.bib}
@@ -16,18 +17,20 @@
 \begin{document}
 
 \studygroup{M3439}
-\title{Поиск подграфов социального графа, включающих заданное множество пользователей.}
+\title{Поиск подграфов социального графа, включающих заданное множество пользователей}
 \author{Филиппов Дмитрий Сергеевич}{Филиппов Д.С.}
 \supervisor{Фильченков Андрей Александрович}{Фильченков А.А.}{канд. физ.-мат. наук}{доцент кафедры компьютерных технологий}
 \publishyear{2017}
 %% Дата выдачи задания. Можно не указывать, тогда надо будет заполнить от руки.
-\startdate{01}{сентября}{2016}
+\startdate{\uhspace{1.5em}}{\uhspace{5em}}{20\uhspace{1.5em}}
 %% Срок сдачи студентом работы. Можно не указывать, тогда надо будет заполнить от руки.
-\finishdate{31}{мая}{2017}
+\finishdate{\uhspace{1.5em}}{\uhspace{5em}}{20\uhspace{1.5em}}
 %% Дата защиты. Можно не указывать, тогда надо будет заполнить от руки.
-\defencedate{15}{июня}{2017}
+\defencedate{\uhspace{1.5em}}{\uhspace{5em}}{20\uhspace{1.5em}}
 
 \addconsultant{Коршунов А.В.}{канд. физ.-мат. наук, без звания}
+
+\secretary{Павлова О.Н.}
 
 \input{chapters/technicalspec.tex}
 
@@ -37,9 +40,10 @@
 %% Оглавление
 \tableofcontents
 
-\input{chapters/abstract.tex}
 \input{chapters/introduction.tex}
 \input{chapters/chapter1.tex}
+\input{chapters/chapter2.tex}
+\input{chapters/chapter3.tex}
 \input{chapters/conclusion.tex}
 
 \printmainbibliography

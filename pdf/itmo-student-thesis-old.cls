@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{itmo-student-thesis}[2017/06/08 v1.2]
+\ProvidesClass{itmo-student-thesis}[2017/05/28 v1.1.2]
 
 \LoadClass[14pt,a4paper]{extreport}
 
@@ -11,7 +11,6 @@
 \RequirePackage{csquotes}
 
 %% Теперь можно писать по-русски.
-
 %% Формируем отступы
 
 \RequirePackage[top=2cm, bottom=2cm, left=2.7cm, right=1.2cm]{geometry}
@@ -137,10 +136,10 @@
 \DefineBibliographyExtras{russian}{\protected\def\bibrangedash{\textendash\penalty\hyphenpenalty}}
 
 
-%% Счетчики. Для всего, кроме страниц, используем totcount, для страниц используем pageslts. Если надо.
+%% Счетчики. Для всего, кроме страниц, используем totcount,
+%% для страниц lastpage, так как он нормально работает с кучей флоатов.
 
-%\RequirePackage{pageslts} % В текущей версии шаблона нет объема работы. Удивительно, но да.
-
+\RequirePackage{lastpage}
 \RequirePackage{totcount}
 \RequirePackage{longtable}
 \regtotcounter[auxfile=\jobname.tct]{figure}
@@ -148,6 +147,7 @@
 \regtotcounter[auxfile=\jobname.tct]{algorithm}
 \newtotcounter[auxfile=\jobname.tct]{citnum}
 \newtotcounter[auxfile=\jobname.tct]{appendix}
+\AtEveryBibitem{\stepcounter{citnum}}
 \AtEveryBibitem{\clearfield{addendum}}
 
 %% Большая пачка определений теорем.
@@ -259,90 +259,8 @@
 \chapter*{СПИСОК ИСПОЛЬЗОВАННЫХ ИСТОЧНИКОВ}%
 \addcontentsline{toc}{chapter}{СПИСОК ИСПОЛЬЗОВАННЫХ ИСТОЧНИКОВ}}
 
-\newcommand{\printmainbibliography}{
-\printbibliography[heading=trueHeading]%
-%%% Считаем, какие границы у пяти- и десятилетней давности
-\newcounter{@yearminusfive@src}%
-\newcounter{@yearminusten@src}%
-\setcounter{@yearminusfive@src}{\theyear}%
-\addtocounter{@yearminusfive@src}{-5}%
-\def\@yearminusfive{\value{@yearminusfive@src}}%
-\setcounter{@yearminusten@src}{\theyear}%
-\addtocounter{@yearminusten@src}{-10}%
-\def\@yearminusten{\value{@yearminusten@src}}%
-%%% Компоненты фильтров
-\newcommand{\@iffiveyears}{\iffieldint{year}{\ifnumless{\thefield{year}}{\@yearminusfive}{\skipentry}{}}{\skipentry}}%
-\newcommand{\@iftenyears}{\iffieldint{year}{\ifnumless{\thefield{year}}{\@yearminusfive}{\ifnumless{\thefield{year}}{\@yearminusten}{\skipentry}{}}{\skipentry}}{\skipentry}}%
-\newcommand{\@ifveryold}{\iffieldint{year}{\ifnumless{\thefield{year}}{\@yearminusten}{}{\skipentry}}{}}%
-\newcommand{\@ifrussian}{\iffieldundef{langid}{\skipentry}{\iffieldequalstr{langid}{russian}{}{\skipentry}}}%
-\newcommand{\@ifforeign}{\iffieldundef{langid}{}{\iffieldequalstr{langid}{russian}{\skipentry}{}}}%
-
-%%% Сами фильтры
-\defbibcheck{bibch@russiansourcesfiveyears}{\@iffiveyears\@ifrussian}%
-\defbibcheck{bibch@russiansourcestenyears}{\@iftenyears\@ifrussian}%
-\defbibcheck{bibch@russiansourcesveryold}{\@ifveryold\@ifrussian}%
-\defbibcheck{bibch@foreignsourcesfiveyears}{\@iffiveyears\@ifforeign}%
-\defbibcheck{bibch@foreignsourcestenyears}{\@iftenyears\@ifforeign}%
-\defbibcheck{bibch@foreignsourcesveryold}{\@ifveryold\@ifforeign}%
-\@countsourceswhere{}{citnum}%
-\@countsourceswhere{check=bibch@russiansourcesfiveyears}{c@russiansourcesfiveyears}%
-\@countsourceswhere{check=bibch@russiansourcestenyears}{c@russiansourcestenyears}%
-\@countsourceswhere{check=bibch@russiansourcesveryold}{c@russiansourcesveryold}%
-\@countsourceswhere{check=bibch@foreignsourcesfiveyears}{c@foreignsourcesfiveyears}%
-\@countsourceswhere{check=bibch@foreignsourcestenyears}{c@foreignsourcestenyears}%
-\@countsourceswhere{check=bibch@foreignsourcesveryold}{c@foreignsourcesveryold}%
-\@countsourceswhere{type=online}{c@internetsources}}
-
+\newcommand{\printmainbibliography}{\printbibliography[heading=trueHeading]}
 \newcommand{\printannobibliography}{\renewcommand*{\bibfont}{\small}\printbibliography[heading=none]}
-
-%% Подсчет источников различных категорий. Это следующие команды:
-%%   \relatedworksourcecount   - число источников, использованных в обзоре
-%%   \russiansourcesfiveyears  - число отечественных источников за последние 5 лет
-%%   \russiansourcestenyears   - число отечественных источников от 5 (не включительно) до 10 лет
-%%   \russiansourcesveryold    - число отечественных источников старше 10 лет
-%%   \foreignsourcesfiveyears  - число иностранных источников за последние 5 лет
-%%   \foreignsourcestenyears   - число иностранных источников от 5 (не включительно) до 10 лет
-%%   \foreignsourcesveryold    - число иностранных источников старше 10 лет
-%%   \internetsources          - число интернет-источников
-
-%%% Сначала учимся считать источники вместо того, чтобы их печатать
-\newcounter{@bibliocounter}
-\defbibenvironment{@fillbibliocounter}
-    {\renewcommand{\blx@driver}[1]{}}
-    {}
-    {\stepcounter{@bibliocounter}}
-
-%%% Заводим счетчики под это все
-\newtotcounter[auxfile=\jobname.tct]{c@relatedworksourcecount}
-\newtotcounter[auxfile=\jobname.tct]{c@russiansourcesfiveyears}
-\newtotcounter[auxfile=\jobname.tct]{c@russiansourcestenyears}
-\newtotcounter[auxfile=\jobname.tct]{c@russiansourcesveryold}
-\newtotcounter[auxfile=\jobname.tct]{c@foreignsourcesfiveyears}
-\newtotcounter[auxfile=\jobname.tct]{c@foreignsourcestenyears}
-\newtotcounter[auxfile=\jobname.tct]{c@foreignsourcesveryold}
-\newtotcounter[auxfile=\jobname.tct]{c@internetsources}
-
-\defbibheading{reallynone}{}
-
-%%% Считаем в счетчик #2 число ссылок, удовлетворяющих фильтру #1
-\newcommand{\@countsourceswhere}[2]{%
-\setcounter{@bibliocounter}{0}%
-\printbibliography[env=@fillbibliocounter,heading=reallynone,#1]%
-\setcounter{#2}{\arabic{@bibliocounter}}}
-
-%%% Определяем команды через значения счетчиков
-\newcommand{\relatedworksourcecount}{\total{c@relatedworksourcecount}}
-\newcommand{\russiansourcesfiveyears}{\total{c@russiansourcesfiveyears}}
-\newcommand{\russiansourcestenyears}{\total{c@russiansourcestenyears}}
-\newcommand{\russiansourcesveryold}{\total{c@russiansourcesveryold}}
-\newcommand{\foreignsourcesfiveyears}{\total{c@foreignsourcesfiveyears}}
-\newcommand{\foreignsourcestenyears}{\total{c@foreignsourcestenyears}}
-\newcommand{\foreignsourcesveryold}{\total{c@foreignsourcesveryold}}
-\newcommand{\internetsources}{\ifthenelse{\equal{\totvalue{c@internetsources}}{0}}{нет}{да, число ресурсов: \total{c@internetsources}}}
-
-%%% Команды для начала и конца секции с обзором
-\newcommand{\startrelatedwork}{\newrefsegment}
-\newcommand{\finishrelatedwork}{\@countsourceswhere{segment=\arabic{refsegment}}{c@relatedworksourcecount}\endrefsegment}
 
 %% Делаем русские варианты знаков неравенств.
 
@@ -442,7 +360,7 @@
 
 \newcommand{\chapterconclusion}{\section*{Выводы по главе~\thechapter}\addcontentsline{toc}{section}{Выводы по главе~\thechapter}}
 
-%% Обратная совместимость со старым стилем
+%% Обратная совместимость со стилем, который у всех есть.
 
 \newcommand{\startthechapters}{}
 \newcommand{\startappendices}{\appendix}
@@ -524,7 +442,6 @@
                             \newcommand{\thesupervisordegree}{#3}
                             \newcommand{\thesupervisorwork}{#4}}
 \newcommand{\publishyear}[1]{\newcommand{\theyear}{#1}}
-\newcommand{\secretary}[1]{\newcommand{\thesecretary}{\textit{#1}}}
 
 %%% Техническое задание и исходные данные к работе
 \newcommand{\technicalspec}[1]{\newcommand{\thetechnicalspec}{#1}}
@@ -563,22 +480,20 @@
 
 %% Создание титульной страницы, задания и аннотации
 
-%%% Параметр: Бакалавр/Магистр
+%%% Параметр: бакалавр/магистр/инженер/...
 \renewcommand{\maketitle}[1]{
     \ifstrequal{#1}{Магистр}{
         \newcommand{\worktypeGenitive}{магистерской диссертации}
-        \newcommand{\worktypeDative}{магистерской диссертации}
         \newcommand{\worktypeAccusative}{магистерскую диссертацию}
-        \newcommand{\worktypeTitle}{\MakeUppercase{Пояснительная записка}\par к {\worktypeDative}}
+        \newcommand{\worktypeTitle}{\MakeUppercase{Магистерская диссертация}}
         \providecommand{\thespecialization}{Технологии проектирования и разработки программного обеспечения}
         \providecommand{\thespecialty}{01.04.02~Прикладная математика и информатика}
     }{
         \ifstrequal{#1}{Бакалавр}{
             \newcommand{\worktypeGenitive}{выпускной квалификационной работы}
-            \newcommand{\worktypeDative}{выпускной квалификационной работе}
             \newcommand{\worktypeAccusative}{выпускную квалификационную работу}
-            \newcommand{\worktypeTitle}{\MakeUppercase{Пояснительная записка}\par к {\worktypeDative}}
-            \providecommand{\thespecialization}{Математические модели и алгоритмы в разработке программного обеспечения}
+            \newcommand{\worktypeTitle}{\MakeUppercase{Пояснительная записка}\par\MakeUppercase{\worktypeGenitive}}
+            \providecommand{\thespecialization}{Математические модели и алгоритмы разработки программного обеспечения}
             \providecommand{\thespecialty}{01.03.02~Прикладная математика и информатика}
         }{
             \ClassError{Unknown maketitle argument: #1, expected Магистр or Бакалавр}
@@ -619,7 +534,7 @@
         }{}\bigskip\par\bigskip\par
         \noindent\small Квалификационная работа выполнена с оценкой \infiniteuhspace\par\bigskip\par
         \noindent\small Дата защиты \hspace{0cm plus 1fill}\thedefencedate\par\bigskip\par
-        \noindent\small Секретарь ГЭК~\thesecretary \hspace{0cm plus 1fill} Принято: \unknowndate\par\bigskip\par
+        \noindent\small Секретарь ГЭК \infiniteuhspace Принято: \unknowndate\par\bigskip\par
         \noindent\small Листов хранения \infiniteuhspace\par\bigskip\par
         \noindent\small Демонстрационных материалов/Чертежей хранения \infiniteuhspace\par\bigskip\par
     \end{titlepage}
@@ -638,7 +553,7 @@
         \bigskip
         \begingroup\banhyphens
         \noindent \textbf{Студент}~\theauthorshort\; \textbf{Группа}~\thestudygroup\; \textbf{Кафедра}~\thechair\; \textbf{Факультет}~\thefaculty\;
-        \textbf{Руководитель}~\thesupervisorshort, \thesupervisordegree, \thesupervisorwork\par
+        \textbf{Руководитель}~\thesupervisor, \thesupervisordegree, \thesupervisorwork\par
         \noindent \textbf{1 Наименование темы:} \thetitle\par
         \noindent \textbf{Направление подготовки (специальность):} \thespecialty\par
         \noindent \textbf{Направленность (профиль):} \thespecialization\par
@@ -684,17 +599,16 @@
         \pagebreak[3]
         \noindent \textbf{2 Задачи, решаемые в работе:} \theresearchtargets \par
         \pagebreak[3]
-        \noindent \textbf{3 Число источников, использованных при составлении обзора:} \relatedworksourcecount \par
+        \noindent \textbf{3 Число источников, использованных при составлении обзора:} \uhspace{4em} \par
         \noindent \textbf{4 Полное число источников, использованных в работе:} \total{citnum} \par
         \noindent \textbf{5 В том числе источников по годам} \par
         \begin{tabular}{|c|c|c|c|c|c|}\hline
             \multicolumn{3}{|c|}{Отечественных} & \multicolumn{3}{c|}{Иностранных} \\\hline
             Последние & От 5      & Более  & Последние & От 5 & Более \\
             5 лет     & до 10 лет & 10 лет & 5 лет     & до 10 лет & 10 лет \\\hline
-            \russiansourcesfiveyears & \russiansourcestenyears & \russiansourcesveryold &
-            \foreignsourcesfiveyears & \foreignsourcestenyears & \foreignsourcesveryold \\\hline
+            ~ & ~ & ~ & ~ & ~ & ~ \\\hline
         \end{tabular}\par
-        \noindent \textbf{6 Использование информационных ресурсов Internet:} \internetsources \par
+        \noindent \textbf{6 Использование информационных ресурсов Internet:} \uhspace{4em} \par
         \pagebreak[3]
         \noindent \textbf{7 Использование современных пакетов компьютерных программ и технологий:}
             \theadvancedtechnologyusage\par
@@ -731,6 +645,7 @@
     \addtolength{\headsep}{-3mm}
 
     \setcounter{page}{4}
+    \setcounter{citnum}{0} %to get rid of my own publications counted twice
     % Выключаем переносы в оглавлении
     \pretocmd{\tableofcontents}{\begingroup\banhyphens}{}{}
     \apptocmd{\tableofcontents}{\endgroup}{}{}
@@ -764,31 +679,22 @@
 
 %% Обработка опций пакета
 
-\newif\if@shouldusexelatex
-\newif\if@shouldusepscyr
+\newif\if@shouldusetimes
 \newif\if@shouldmakespecification
 \newif\if@shouldmakeannotation
-\newif\if@shouldusexelatex
-\newif\if@shouldsourcesbyhand
 
-\DeclareOption{times}{\@shouldusexelatextrue}
-\DeclareOption{pscyr}{\@shouldusepscyrtrue}
+\DeclareOption{times}{\@shouldusetimestrue}
 \DeclareOption{specification}{\@shouldmakespecificationtrue}
 \DeclareOption{annotation}{\@shouldmakeannotationtrue}
 
 \ProcessOptions
 
-\if@shouldusexelatex
-    \RequirePackage{fontspec}
-    \defaultfontfeatures{Ligatures={TeX},Renderer=Basic}
-    \setmainfont[Ligatures={TeX,Historic}]{Times New Roman}
-    \setsansfont{Arial}
-    \setmonofont{Courier New}
+%% Включаем times, если надо
+
+\if@shouldusetimes
+    \RequirePackage{pscyr}
+    \def\rmdefault{ftm}
 \else
-    \if@shouldusepscyr
-        \RequirePackage{pscyr}
-        \def\rmdefault{ftm}
-    \else
-        \RequirePackage{paratype}
-    \fi
+    \RequirePackage{paratype}
 \fi 
+

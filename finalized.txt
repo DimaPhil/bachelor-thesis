@@ -54,6 +54,20 @@ http://dl.acm.org.sci-hub.cc/citation.cfm?id=2752948
 
 http://ai2-s2-pdfs.s3.amazonaws.com/8b5a/d3298745a67fb000e006eb6ac53bc2625cc7.pdf
 
+11. Bump hunting in the dark: Local Discrepancy Maximization on Graphs
+    May 23, 2016
+
+https://users.ics.aalto.fi/gionis/bump_hunting.pdf
+https://github.com/mmathioudakis/bump_hunting/tree/master/src
+
+На Евклидовом пространстве, метрика, которую сложно сравнивать с нашей
+
+12. Mining Connection Pathways for Marked Nodes in Large Graphs
+    May 2013.
+
+https://users.ics.aalto.fi/gionis/akoglu13dot.pdf
+
+Пытается разбивать на несколько сообществ, другая цель.
 
 1. Baseline (7). Ищут максимальный k-truss с минимальным диаметром
   * NP-hard, нужны оптимизации
