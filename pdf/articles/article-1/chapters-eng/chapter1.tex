@@ -1,0 +1,59 @@
+\chapter{Preliminaries and existing solutions}
+
+\startrelatedwork
+
+Solving different problems like community search in social networks is very relevant in the current world. There are different methods for finding communities in the whole network \cite{Newman04, Newman06, Fortunato10, Cui13} and also for finding a dense community containing all selected vertices in the network \cite{Faloutsos06, Wiener15, Huang15, Barbieri15}. There are even algorithms for splitting selected vertices into several communities \cite{Akoglu13, Bian18}. However, almost all of these algorithms don't support noise in the query and find non-optimal subgraphs on such queries. We are going to solve this problem in our work, suggesting the new algorithm that will effectively find the needed subgraph even if there is some noise in the query.
+
+\section{Terms and definitions}
+
+\subsection{Graph terms}
+
+In this section we will describe all terms and definitions that may be helpful for the further reading.
+
+Let's define \textbf{$N_G(v)$} as the set of the neighbors of vertex $v$ in graph $G$, i.e. the set of the vertices that are directly connected to $v$ by edge: $N_G(v) = \{u | (v, u) \in E(G)\}$. If graph $G$ can be obviously recognized from the context, we can use just $N(v)$.
+
+\textbf{$G[V]$} is called \textbf{originated subgraph} of the graph $G$ by the set of vertices $V$ if $G[V] := (V, E[G, V])$, where $E[G, V]$~--- the subset of the set of edges of $G$, both ends of which are contained in $V$, i.e. $E[G, V] = E(G) \cap (V \times V)$.
+
+\textbf{k-truss} of the graph $G$ is the subgraph $G' \subseteq G$ containing the maximal possible number of vertices, such that for each edge $(v, u)$ the number of vertices $w$, such that edges $(w, v)$ and $(w, u)$ exists in $G'$ is at least $k$. In other words, $k-truss$ is the maximal by size subgraph $G'$, for each of which edge $(v, u)$, the $|N_{G'}(v) \cap N_{G'}(u)| >= k$ is true.
+
+\textbf{k-core} of the graph $G$ is called the maximal by the number of vertices subgraph $G' \subseteq G$, so that the degree of each of its vertices is at least $k$. For the fixed $k$, by $C_k$ we will denote \textit{$k$-core}, namely the set of the connected components of which it consists. So, $C_k = \{H_i\}$, where $H_i$ is the $i$-th connected component, where the degree of each vertex is at least $k$. The number $k$ we will call the \textbf{order} of \textit{k-core}.
+
+By \boldmath$\mu(G)$\unboldmath we will denote the minimal degree of the vertices $G$, i.e. $\mu(G) = \min_{v \in V(G)} deg(v)$.
+
+\textbf{Core decomposition} is the set of \textit{k-core} for all possible $k$: $C = \{C_k\}_{k=1}^{k=k^*}$. We also need to clarify that from the definition of the \textit{k-core} you can see that $C_1 \supseteq C_2 \supseteq C_3 \ldots \supseteq C_{k^*}$ (where $k^*$ is the maximal possible $k$ in core decomposition).
+
+\textbf{Сore index} for the vertex $v$ is called the minimal by the size \textit{k-core} which includes $v$, i.e. \textit{k-core} with the maximal $k$: $c(v) = \max(k \in [0..k^*] | v \in C_k)$.
+
+\textbf{$\gamma$-quasi-clique} of the graph $G$ is called any such subgraph $G' \subseteq G$ that it is <<dense enough>>, i.e. $\frac{2 \cdot |E(G')|}{|V(G')| \cdot (|V(G')| - 1)} \ge \gamma$.
+
+\subsection{Social networks}
+
+\textbf{The community} or \textbf{The community in social network} is called the set of vertices of the social network $G$, where all vertices are united by some property or attribute. For example, <<the community of rock lovers>> or <<the community of Apple shareholders>>.
+
+\textbf{The social clique} or \textbf{clique} we will call the set of people in social network, where everyone "knows" (i.e. is connected by edge) each other, in other words when between any pair of distinct people there is an edge in social network.
+
+\textbf{Social pseudoclique} or \textbf{pseudoclique} we will call the set of people, where it is not required that each pair of distinct people is connected by edge, but this set is still densely connected. The estimation, how dense the pseudoclique is connected depends on the type of the pseudoclique and will be discussed later in the work, but in all definitions the biggest role plays the number of edges in subgraph in comparison with the number of pairs of vertices ($\frac{2 \cdot |E(G)|}{|V(G)| \cdot (|V(G)| - 1)}$).
+
+\subsection{Useful abbreviations}
+
+\textbf{CSP}~--- Community Search Problem. This is the problem for finding the community in the social network which contains all the selected vertices.
+
+\textbf{NCSP}~--- Noising Community Search Problem. This is the problem for finding the community in the social network which contains most of the selected vertices, but not necessary all (not including the noise).
+
+\section{Overview}
+
+The problem that we are analyzing in the work is formulated as follows: given an undirected unweighted graph $G$ and a set of selected vertices $Q \subset V(G)$, the goal is to solve noising community search problem (NCSP)~--- to find the community which contains most of the vertices from $Q$, but not necessary all of them. Sometimes we will call vertices from $Q$ <<query vertices>>, <<query>>, or <<vertices from query>>.
+
+\subsection{Related work}
+
+The most part of algorithms for solving SCP are the algorithms based on finding the optimal pseudocliques with some additional heuristics. There are a lot of different pseudocliques that were considered in different articles: \textit{k-core} \cite{Barbieri15}, \textit{k-truss} \cite{Huang15}, \textit{$\gamma$-quasi-clique} \cite{Zhu11} or just algorithms that maximize the edge density in the resulting subgraph \cite{Wu15} which is almost a definition of a pseudoclique. For each of these pseudocliques the algorithms are evolving and becoming better, optimizing the previous results using new heuristics. Comparing the results of the algorithms that use different pseudocliques is quite hard and unlikely will give visible results because of the difference of the metrics that are being optimized~--- the result strongly depends on the initial graph and the queries on it. In some cases one pseudoclique will obtain results better than others, but in other cases it will work worse, so actually it's worth to compare some common performance metrics, but unfortunately it doesn't give us the whole understanding of the optimality or non-optimality of the algorithms.
+
+\section{Final requirements for our work}
+
+Most of the current solutions solve CSP quite optimal~--- each of the solutions uses it's own metric and obtains quite good results. However, solutions for NCSP (which includes noise into consideration) are quite rare, despite of this problem is more related to the real life. We found two articles that are able to solve NSCP at least somehow: C. Faloutsos \& H. Tong \cite{Faloutsos06} and A. Gionis et al. \cite{Gionis15}, however the last problem is not focused on solving NCSP (but solves it at the same time). So, the goal of our article is to build the algorithm that focuses on NCSP solving and obtains better results than the current ones. Here are some requirements for our algorithm:
+
+\begin{itemize}
+    \item The algorithm should obtain better results than the current ones \cite{Faloutsos06, Gionis15, Barbieri15};
+    \item The algorithm should be quite optimal, ideally not loosing the competition with other algorithms in terms of working time;
+    \item It would be an advantage to support backwards compatibility~--- if the user wants to find subgraph that contains \textit{all} query vertices, it should be possible to be done.
+\end{itemize}

@@ -1,0 +1,10 @@
+%% Макрос для заключения. Совместим со старым стилевиком.
+\startconclusionpage
+
+By given graph $G$ and a set of query vertices $Q \subset V(G)$ in this article we're solving the task of finding the community containing all or most of the vertices from $Q$. As we proved before, the task is very actual nowdays and can be applied in many fields.
+
+In this work we try to find \textit{k-core} with maximal $k$ of the minimal size containing most of the vertices from $Q$. We proof that the task is NP-hard and describe some heuristics for its solution. Experiment results held on the real data show us that on the queries without any noise our suggested solutions works almost the same as the best existing solution. However, after adding a noise to the query, solutions of other authors start to find non-optimal big subgraph when our solution finds densely connected small subgraphs.
+
+Also, the suggested algorithm is backward compatible~--- we can add parameter $minSize$ which will be equal to the minimal number of query vertices in the answer. This parameter won't affect much on our solution, but will help us to find subgraph containing all query vertices.
+
+In future we plan to spread the suggested idea on weighted graph and maybe some other kind of graphs~--- attibuted graphs, multigraphs, etc.

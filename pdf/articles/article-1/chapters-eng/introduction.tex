@@ -1,0 +1,27 @@
+\startprefacepage
+
+Social networks researching and analysis has become very popular in the century of the social networks. One of the examples of the social networks analysis is a community search problem. Most of the related works explore communities of the whole network whereas the search of community containing only selected vertices of the network also presents a big interest. This task is also researched quite widely, but adding some requirements that make the problem more related to the real life makes it more interesting and harder. We're going to investigate the problem of finding community containing not necessary all the selected vertices, but only most of them, i.e. making the noise in the selected vertices possible.
+
+The relevance of the initial problem, where all selected vertices should be present in the resulting subgraph may be found in many areas:
+
+\begin{enumerate}
+  \item Police, security~--- knowing only several suspects, you need to find the whole groupment or gang;
+  \item Social networks~--- after adding one or more friends in the social network, you may find suggestions with people that are densely connected with recently added people useful;
+  \item Medicine~--- by several infected people you need to find other possibly infected using the social graph of their familiarity;
+\end{enumerate}
+
+Our problem (which doesn't require the answer to contain all selected vertices, but only most of them) is relevant in the same spheres, and besides as you can see below, is more relevant to the real life:
+
+\begin{enumerate}
+  \item Police~--- find the rest of the groupment, taking into consideration that some of the suspects may be taken only for one deal and doesn't relate to the whole groupment;
+  \item Social networks~--- friends recommendation after recent friending, taking into consideration that recently added friends may be from different social communities and may know each other only by you;
+  \item Medicine~--- find the most likely infected people, taking into consideration that some of the results may be false-positive;
+\end{enumerate}
+
+Almost all existing articles about community search problem are solving the first task, i.e. the community search with all selected vertices in it. We're going to introduce new algorithm which takes query noise into consideration and solves the community search problem better, especially on noisy queries.
+
+In chapter $1$ the main definitions and terms are presented. This chapter also contains a review of the related work and existing solutions. At the end of this chapter we provide updated requirements for our algorithm.
+
+In chapter $2$ our new algorithm is presented. The algorithm is splitted into several phases for better understanding. We also show how our algorithm works on a bunch of examples with illustrations.
+
+In chapter $3$ the experimental part is presented: we describe what datasets that were taken for the experiments, how the test cases and queries were built and how our algorithm works on these experiments comparing to the main baselines.
